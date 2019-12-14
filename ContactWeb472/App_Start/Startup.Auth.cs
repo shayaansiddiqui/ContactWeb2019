@@ -6,18 +6,22 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using ContactWeb472.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ContactWeb472
 {
     public partial class Startup
     {
         // For more information on configuring authentication, please visit https://go.microsoft.com/fwlink/?LinkId=301864
+        // https://code.msdn.microsoft.com/ASPNET-MVC-5-Security-And-44cbdb97
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context, user manager and signin manager to use a single instance per request
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
+
+            CreateRolesAndUsers();
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
@@ -63,6 +67,30 @@ namespace ContactWeb472
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+        }
+
+        private void CreateRolesAndUsers()
+        {
+            ApplicationDbContext context = new ApplicationDbContext();
+
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+
+            if(!roleManager.RoleExists("Admin"))
+            {
+                var role = new IdentityRole();
+                role.Name = "Admin";
+                roleManager.Create(role);
+
+                var user = new ApplicationUser();
+                user.UserName = "spock@ncc1701.com";
+                user.Email = "spock@ncc1701.com";
+                
+                var userPWD = "Facinating#1!";
+                var checkUser = userManager.Create(user, userPWD);
+                if (!checkUser.Succeeded) throw new Exception("Couldn't Create the super admin user");
+                var result = userManager.AddToRole(user.Id, "Admin");                
+            }
         }
     }
 }

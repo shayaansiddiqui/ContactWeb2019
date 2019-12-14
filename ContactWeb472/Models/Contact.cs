@@ -52,6 +52,8 @@ namespace ContactWeb472.Models
         //https://stackoverflow.com/questions/16675176/asp-net-mvc-4-zip-code-validation
         [StringLength(ConstantWebConstants.MAX_ZIP_CODE_LENGTH, MinimumLength =ConstantWebConstants.MIN_ZIP_CODE_LENGTH)]
         public string Zip { get; set; }
+
+        [Required]
         public string UserId { get; set; }
         public virtual ApplicationUser User { get; set; }
 
