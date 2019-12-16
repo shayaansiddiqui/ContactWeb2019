@@ -8,40 +8,48 @@ namespace ContactWeb472.Models
         [Key]
         public int Id { get; set; }
         
+        [Display(Name = "First Name")]
         [Required(ErrorMessage = "First Name is Required")]
         [StringLength(ConstantWebConstants.MAX_FIRST_NAME_LENGTH)]
         public string FirstName { get; set; }
-        
+
+        [Display(Name = "Last Name")]
         [Required(ErrorMessage ="Last Name is Required")]
         [StringLength(ConstantWebConstants.MAX_LAST_NAME_LENGTH)]
         public string LastName { get; set; }
-        
+
+        [Display(Name = "Email Address")]
         [Required(ErrorMessage = "Email is Required")]
         [EmailAddress(ErrorMessage ="Invalid Email Address")]
         [StringLength(ConstantWebConstants.MAX_EMAIL_LENGTH)]
         public string Email { get; set; }
-        
+
+        [Display(Name = "Mobile Phone")]
         [Required(ErrorMessage = "Phone Number is Required")]
         [StringLength(ConstantWebConstants.MAX_PHONE_LENGTH)]
         public string PhonePrimary { get; set; }
 
+        [Display(Name = "Home/Office Phone")]
         [Required(ErrorMessage = "Phone Number is Required")]
         [StringLength(ConstantWebConstants.MAX_PHONE_LENGTH)]
         public string PhoneSecondary { get; set; }
         
         [DataType(DataType.Date)]
         public DateTime Birthday { get; set; }
-        
+
+        [Display(Name = "Street Address Line 1")]
         [StringLength(ConstantWebConstants.MAX_STREET_LENGTH)]
         public string StreetAddress1 { get; set; }
 
+        [Display(Name = "Street Address Line 2")]
         [StringLength(ConstantWebConstants.MAX_STREET_LENGTH)]
         public string StreetAddress2 { get; set; }
         
         [Required(ErrorMessage = "City is Required")]
         [StringLength(ConstantWebConstants.MAX_CITY_LENGTH)]
         public string City { get; set; }
-        
+
+        [Display(Name = "State")]
         [Required(ErrorMessage = "State is Required")]
         public int StateId { get; set; }
         public virtual State State { get; set; }
@@ -61,8 +69,9 @@ namespace ContactWeb472.Models
         public string FriendlyName => $"{FirstName} {LastName}";
         
         [Display(Name ="Full Address")]
-        public string FriendlyAddress => string.IsNullOrWhiteSpace(StreetAddress2)
-                                            ? $"{StreetAddress1}, {City} {State.Abbreviation} {Zip}"
-                                            : $"{StreetAddress1} - {StreetAddress2}, {City} {State.Abbreviation} {Zip}";
+        public string FriendlyAddress => string.IsNullOrWhiteSpace(StreetAddress1) ? $"{City} {State.Abbreviation} {Zip}" :
+                                            string.IsNullOrWhiteSpace(StreetAddress2)
+                                                ? $"{StreetAddress1}, {City} {State.Abbreviation} {Zip}"
+                                                : $"{StreetAddress1} - {StreetAddress2}, {City} {State.Abbreviation} {Zip}";
     }
 }

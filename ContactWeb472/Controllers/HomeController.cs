@@ -15,14 +15,14 @@ namespace ContactWeb472.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Shayaan Siddiqui - ASP.NET MVC 4 with Entity Framework";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Write To Us";
 
             return View();
         }

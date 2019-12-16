@@ -35,3 +35,8 @@ textarea {
     background-color: #6F6F83;
     color: white;
 }
+
+.btn-delete {
+    background-color: #e74c3c;
+    color: white;
+}
