@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace ContactWeb472
 {
@@ -22,9 +21,14 @@ namespace ContactWeb472
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
+                "~/Scripts/DataTables/datatables.min.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/DataTables/datatables.min.css",
+                      "~/Content/DataTables/jquery.dataTables.min.css",
+                      "~/Content/Site.css"));
         }
     }
 }
